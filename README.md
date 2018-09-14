@@ -48,7 +48,7 @@ Connected to ce6b309e289d620be08c964969aeb39f with status STATUS_OK
 ### Run a test app against the Mock Server
 
 ```
-$  python app.py
+$  python examples/mock/app.py
 Connected to ce6b309e289d620be08c964969aeb39f with status STATUS_OK
 Volume id is 92ebbfd8-f35c-4e5b-90b6-b0c2377cac21
 Snapshot created with id 4cd44336-834c-45ab-8c3e-39594873bb08
