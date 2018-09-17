@@ -28,6 +28,7 @@ def px_create_snapshot(portworx_volume_id, pvc_name):
     try:
         print("Creating a snapshot per company policy of %s!" % portworx_volume_id)
         # Create a snapshot
+        volumes = api_pb2_grpc.OpenStorageVolumeStub(channel)
         snap = volumes.SnapshotCreate(api_pb2.SdkVolumeSnapshotCreateRequest(
          volume_id=portworx_volume_id,
          name="%s-%s" % (pvc_name,"{:%B-%d-%Y-%s}".format(datetime.now()))
@@ -73,5 +74,5 @@ for event in w.stream(v1.list_persistent_volume, _request_timeout=(30,None)):
                     loop.run_until_complete(asyncio.wait(tasks))
                     loop.close()
                     # Add PVC to the list of PVCs we've taken action on
-                    pvcs_action_taken.append(pvc_name)
+                    pvcs_action_taken.append(pvc)
 

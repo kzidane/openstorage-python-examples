@@ -6,7 +6,7 @@ from openstorage import api_pb2
 from openstorage import api_pb2_grpc
 
 portworx_grpc = os.getenv('PWX_GRPC_ENDPOINT', 'localhost:9100')
-print "Connecting to %s" % portworx_grpc
+print("Connecting to %s" % portworx_grpc)
 channel = grpc.insecure_channel(portworx_grpc)
 
 try:
