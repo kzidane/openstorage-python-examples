@@ -57,3 +57,14 @@ Status of the backup is SdkCloudBackupStatusTypeDone
 Backup history for volume 92ebbfd8-f35c-4e5b-90b6-b0c2377cac21
 Time:2018-09-06T21:24:22.974003800Z Status:SdkCloudBackupStatusTypeDone
 ```
+
+## Using the Kubernetes Examples
+
+```
+(python3-openstorage) $ pip install kubernetes asyncio
+(python3-openstorage) $ export KUBECONFIG_FILE=/your/kubeconfig
+(python3-openstorage) $ export AWS_ACCESS_KEY=<YOUR_KEY>
+(python3-openstorage) $ export AWS_SECRET_KEY=<YOUR_SECRET_KEY>
+```
+
+Examples found in *examples/kubernetes/*
