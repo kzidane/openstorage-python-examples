@@ -3,6 +3,8 @@
 import os
 import grpc
 import asyncio
+import signal
+import sys
 from datetime import datetime
 from openstorage import api_pb2
 from openstorage import api_pb2_grpc
@@ -20,6 +22,7 @@ config.load_kube_config(config_file=kubeconfig)
 
 v1 = client.CoreV1Api()
 w = watch.Watch()
+loop = asyncio.get_event_loop()
 pvcs_action_taken = []
 
 # A asynchrounous function to do some work
@@ -54,6 +57,14 @@ def px_create_cloud_backup(portworx_volume_id, backup_cred):
     else:
         print('Failed, no backup credential set')
 
+def signal_handler(sig, frame):
+        print('You pressed Ctrl+C!')
+        w.stop()
+        loop.close()
+        sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
+
 # Only watch events related to Persistent Volumes
 for event in w.stream(v1.list_persistent_volume, _request_timeout=(30,None)):
     # Let's only look at "new" ADDED volumes.
@@ -67,12 +78,9 @@ for event in w.stream(v1.list_persistent_volume, _request_timeout=(30,None)):
                     print("Found a new pvc: %s px-volume: %s" % (pvc, px_vol_id))
                     print("We're going to do thing using the portworx SDK!")
                     # Create a snapshot
-                    loop = asyncio.get_event_loop()
                     tasks = [
                         asyncio.ensure_future(px_create_snapshot(px_vol_id, pvc)),
                         asyncio.ensure_future(px_create_cloud_backup(px_vol_id, backup_cred))]
                     loop.run_until_complete(asyncio.wait(tasks))
-                    loop.close()
                     # Add PVC to the list of PVCs we've taken action on
                     pvcs_action_taken.append(pvc)
-
