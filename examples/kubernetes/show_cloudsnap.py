@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
+import os
 import sys
+import grpc
 from openstorage import api_pb2
 from openstorage import api_pb2_grpc
 from kubernetes import client, config, watch
@@ -31,9 +33,9 @@ try:
     ))
     print('Backup history for volume {0}'.format(volume_id))
     for item in history.history_list:
-        print('Time:{0} Status:{1}'.format(
+        print('Time Taken: {0}, Source Volume: {1}'.format(
             item.timestamp.ToJsonString(),
-            api_pb2.SdkCloudBackupStatusType.Name(item.status)
+            item.src_volume_id
         ))
 
 except grpc.RpcError as e:

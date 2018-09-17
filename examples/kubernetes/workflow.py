@@ -46,10 +46,11 @@ def px_create_cloud_backup(portworx_volume_id, backup_cred):
     if backup_cred is not None:
         try:
             # Create backup
+            print('Cloud Backup Started for Volume ID {0}'.format(portworx_volume_id))
             backups = api_pb2_grpc.OpenStorageCloudBackupStub(channel)
             backup_resp = backups.Create(api_pb2.SdkCloudBackupCreateRequest(
                 volume_id=portworx_volume_id,
-                credential_id=cred_resp.credential_id,
+                credential_id=backup_cred,
                 full=False
             ))
         except grpc.RpcError as e:
