@@ -16,6 +16,7 @@ volume_id = sys.argv[1]
 
 try:
     # Get status
+    backups = api_pb2_grpc.OpenStorageCloudBackupStub(channel)
     status_resp = backups.Status(api_pb2.SdkCloudBackupStatusRequest(
         volume_id=volume_id
     ))

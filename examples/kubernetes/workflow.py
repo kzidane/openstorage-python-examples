@@ -25,7 +25,7 @@ w = watch.Watch()
 loop = asyncio.get_event_loop()
 pvcs_action_taken = []
 
-# A asynchrounous function to do some work
+# A asynchronous function to do some work
 @asyncio.coroutine
 def px_create_snapshot(portworx_volume_id, pvc_name):
     try:
@@ -40,7 +40,7 @@ def px_create_snapshot(portworx_volume_id, pvc_name):
     except grpc.RpcError as e:
         print('Failed: code={0} msg={1}'.format(e.code(), e.details()))
 
-# A asynchrounous function to do some work
+# A asynchronous function to do some work
 @asyncio.coroutine
 def px_create_cloud_backup(portworx_volume_id, backup_cred):
     if backup_cred is not None:
