@@ -45,7 +45,7 @@ r = requests.post(url = OKTA_ENDPOINT, data = PARAMS)
 # extracting data in json format 
 data = r.json()
 openid_token = data[u'id_token']
-print("Retreived your token: %s " % openid_token)
+print("Retrieved your token: %s " % openid_token)
 
 portworx_grpc = os.getenv('PWX_GRPC_ENDPOINT', 'localhost:9100')
 portworx_cafile = os.getenv('PWX_CA_FILE', '')
